@@ -41,7 +41,13 @@ void ofApp::setup(){
     ofTrueTypeFontSettings settings("ヒラギノ角ゴシック W3.ttc", 50);
 //    settings.antialiased = true;
     settings.contours = true;
-//    settings.addRanges(ofAlphabet::Japanese); // 日本語文字セットを指定
+    settings.addRanges(ofAlphabet::Japanese);//日本語
+    settings.addRange(ofUnicode::Space);//スペース
+    settings.addRange(ofUnicode::Latin);//アルファベット等
+    settings.addRange(ofUnicode::Latin1Supplement);//記号、アクサン付き文字など
+    settings.addRange(ofUnicode::NumberForms);//数字？
+    settings.addRange(ofUnicode::Hiragana);//ひらがな
+    settings.addRange(ofUnicode::Katakana);//カタカナ
     font.load(settings);
     
     // UTF-8エンコーディングを使用
@@ -102,6 +108,8 @@ void ofApp::draw(){
             break;
         case COUNTDOWN:
             countdownSec = countdownConst - tick;
+            ofSetColor(0);
+            font.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
             
             if (countdownSec <= .0) {
                 stat = TAKE_PHOTO;
