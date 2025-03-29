@@ -46,7 +46,8 @@ class ofApp : public ofBaseApp{
               resetTick,
               resetTimeStamp,
               scaleValue,
-              countdownSec;
+              countdownSec,
+              bgAlpha;
     
         const float countdownConst = 5.0,
                     resetConst = 1.0;

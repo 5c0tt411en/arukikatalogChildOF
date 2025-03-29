@@ -59,7 +59,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	grabber.update();
+    if (stat == WAIT || stat == COUNTDOWN || stat == CHATTERING) {
+        grabber.update();
+    }
     
 	if (grabber.isFrameNew()) {
         fbo.begin();
@@ -150,6 +152,9 @@ void ofApp::draw(){
             }
             break;
         case TAKE_PHOTO:
+            bgAlpha = ofClamp(255 * (1 - tick), 0, 255);
+            ofSetColor(255, bgAlpha);
+            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             if (tick >= 2.) {
                 stat = SYNC;
                 timeStamp = ofGetElapsedTimef();
