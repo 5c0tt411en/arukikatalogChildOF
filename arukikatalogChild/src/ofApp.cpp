@@ -41,7 +41,7 @@ void ofApp::setup(){
     ofTrueTypeFontSettings settings("ヒラギノ角ゴシック W3.ttc", 50);
 //    settings.antialiased = true;
     settings.contours = true;
-    settings.addRanges(ofAlphabet::Japanese); // 日本語文字セットを指定
+//    settings.addRanges(ofAlphabet::Japanese); // 日本語文字セットを指定
     font.load(settings);
     
     // UTF-8エンコーディングを使用
@@ -99,8 +99,28 @@ void ofApp::draw(){
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
             }
+            break;
         case COUNTDOWN:
-            font.drawString("Hello World!!", 100, 200); // 文字とポジションを指定して描画
+            countdownSec = countdownConst - tick;
+            
+            if (countdownSec <= .0) {
+                stat = TAKE_PHOTO;
+                timeStamp = ofGetElapsedTimef();
+                countdownSec = countdownConst;
+            }
+            break;
+        case TAKE_PHOTO:
+            if (tick >= 2.) {
+                stat = SYNC;
+                timeStamp = ofGetElapsedTimef();
+            }
+            break;
+        case SYNC:
+            if (tick >= 2.) {
+                stat = WAIT;
+                timeStamp = ofGetElapsedTimef();
+            }
+            break;
         default:
             break;
     }
@@ -111,11 +131,9 @@ void ofApp::draw(){
     string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
     info += "OSC /trigger : " + ofToString(triggerState) + '\n';
     info += "OSC /scale : " + ofToString(scaleValue) + '\n';
+    info += "tick : " + ofToString(tick) + '\n';
     info += "state : " + ofToString(stat);
     ofDrawBitmapStringHighlight(info, 20, 60);
-    
-    ofSetColor(255, 0, 0);
-    font.drawString("テスト", 100, 500);
 }
 
 //--------------------------------------------------------------

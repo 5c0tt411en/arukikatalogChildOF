@@ -42,12 +42,15 @@ class ofApp : public ofBaseApp{
         ofxOscReceiver oscReceiver;  // OSCレシーバー
         bool triggerState;           // /trigger の値
         float scaleValue;            // /scale の値
+        float countdownSec;
+        const float countdownConst = 5.0;
     
-    enum State {
-        WAIT,
-        COUNTDOWN,
-        TAKE_PIC,
-    };
-    State stat = WAIT;
-    ofTrueTypeFont font;
+        enum State {
+            WAIT,
+            COUNTDOWN,
+            TAKE_PHOTO,
+            SYNC,
+        };
+        State stat = WAIT;
+        ofTrueTypeFont font;
 };
