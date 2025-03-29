@@ -38,7 +38,7 @@ void ofApp::setup(){
 //    font.setLineHeight(24);       // 行間を指定する
 //    font.setLetterSpacing(1.0);   // 文字間を指定する
     
-    ofTrueTypeFontSettings settings("ヒラギノ角ゴシック W3.ttc", 50);
+    ofTrueTypeFontSettings settings("fonts/ヒラギノ角ゴシック W3.ttc", 50);
 //    settings.antialiased = true;
     settings.contours = true;
     settings.addRanges(ofAlphabet::Japanese);//日本語
@@ -205,7 +205,7 @@ void ofApp::saveFrame() {
     ofPixels pixels = grabber.getPixels();
     
     // タイムスタンプ付きのファイル名を作成
-    string fileName = "capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
+    string fileName = "outputs/capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
     
     // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
     imageSaver.saveImageWithRotation(pixels, fileName, 90);  // 90度時計回りに回転
