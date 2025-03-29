@@ -152,16 +152,23 @@ void ofApp::draw(){
             }
             break;
         case TAKE_PHOTO:
-            bgAlpha = ofClamp(255 * (1 - tick), 0, 255);
-            ofSetColor(255, bgAlpha);
+            shutterAlpha = ofClamp(255 * (1 - tick), 0, 255);
+            ofSetColor(255, shutterAlpha);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-            if (tick >= 2.) {
+            toSyncAlpha = ofClamp(75 * (tick - 3.), 0, 150);
+            ofSetColor(0, toSyncAlpha);
+            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+            if (tick >= 5.) {
                 stat = SYNC;
                 timeStamp = ofGetElapsedTimef();
             }
             break;
         case SYNC:
-            if (tick >= 2.) {
+            ofSetColor(0, toSyncAlpha);
+            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+            ofSetColor(255, 128 - 128 * cos(tick * 3));
+            font.drawString("別の写真を待っています。", 100, 200);
+            if (tick >= 10.) {
                 stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
             }

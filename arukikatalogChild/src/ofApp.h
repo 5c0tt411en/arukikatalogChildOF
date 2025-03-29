@@ -47,7 +47,8 @@ class ofApp : public ofBaseApp{
               resetTimeStamp,
               scaleValue,
               countdownSec,
-              bgAlpha;
+              shutterAlpha,
+              toSyncAlpha;
     
         const float countdownConst = 5.0,
                     resetConst = 1.0;
