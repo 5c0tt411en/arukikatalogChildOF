@@ -107,6 +107,8 @@ void ofApp::draw(){
     
     switch (stat) {
         case WAIT:
+            ofSetColor(0, 128 - 128 * cos(tick * 3));
+            font.drawString("ポーズをとってください。", 100, 200);
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
