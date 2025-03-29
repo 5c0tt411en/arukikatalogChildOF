@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxSyphon.h"
 #include "ofxOsc.h"
+#include "ImageSaverThread.hpp"
 
 #define OSC_PORT 7000  // 受信ポート
 
@@ -24,6 +25,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+        void exit();  // アプリ終了時の処理を追加
         void saveFrame();
 		
 		ofVideoGrabber grabber;
@@ -31,6 +33,7 @@ class ofApp : public ofBaseApp{
         ofFbo fbo;  // 縮小用のFBO
         ofxSyphonServer syphonServer; // Syphon サーバー
         ofxOscReceiver oscReceiver;  // OSCレシーバー
+        ImageSaverThread imageSaver; // 画像保存スレッド
         
         int camWidth = 3840;  // カメラの解像度（幅）
         int camHeight = 2160; // カメラの解像度（高さ）

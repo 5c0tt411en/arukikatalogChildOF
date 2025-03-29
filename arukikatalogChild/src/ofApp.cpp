@@ -52,6 +52,9 @@ void ofApp::setup(){
     
     // UTF-8エンコーディングを使用
     ofEnableAlphaBlending();
+    
+    // 画像保存スレッドを開始
+    imageSaver.start();
 }
 
 //--------------------------------------------------------------
@@ -121,6 +124,7 @@ void ofApp::draw(){
                 stat = TAKE_PHOTO;
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
+                saveFrame();
             }
             break;
         case CHATTERING:
@@ -142,6 +146,7 @@ void ofApp::draw(){
                 stat = TAKE_PHOTO;
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
+                saveFrame();
             }
             break;
         case TAKE_PHOTO:
@@ -183,23 +188,27 @@ void ofApp::keyReleased(int key){
     }
 }
 
+// リファクタリングした saveFrame 関数
 void ofApp::saveFrame() {
-    if (grabber.isFrameNew()) {  // 新しいフレームがあるか確認
-        ofPixels pixels = grabber.getPixels();  // ピクセルデータ取得
+    if (grabber.isFrameNew()) {
+        // ピクセルデータを取得
+        ofPixels pixels = grabber.getPixels();
         
-        // 画像を回転するために新しい ofImage を作成
-        ofImage rotatedImage;
-        rotatedImage.setFromPixels(pixels);
-        rotatedImage.rotate90(1);  // 90度回転（1 = 時計回り）
-
         // タイムスタンプ付きのファイル名を作成
         string fileName = "capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
         
-        // 保存
-        rotatedImage.save(fileName);
-        ofLogNotice() << "Saved image: " << fileName;
+        // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
+        imageSaver.saveImageWithRotation(pixels, fileName, 90);  // 90度時計回りに回転
+        
+        ofLogNotice() << "Queued image for rotation and saving: " << fileName;
     }
 }
+
+//--------------------------------------------------------------
+ void ofApp::exit() {
+     // スレッドを正しく終了
+     imageSaver.stop();
+ }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
