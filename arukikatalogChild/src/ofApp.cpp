@@ -78,11 +78,11 @@ void ofApp::update(){
         if (msg.getAddress() == "/trigger") {
             int val = msg.getArgAsInt(0);  // 整数として受け取る
             triggerState = (val == 1);
-            ofLogNotice() << "Received /trigger: " << val;
+//            ofLogNotice() << "Received /trigger: " << val;
         }
         else if (msg.getAddress() == "/scale") {
             scaleValue = msg.getArgAsFloat(0);  // 小数値として受け取る
-            ofLogNotice() << "Received /scale: " << scaleValue;
+//            ofLogNotice() << "Received /scale: " << scaleValue;
         }
     }
 }
@@ -125,10 +125,10 @@ void ofApp::draw(){
             }
             
             if (countdownSec <= .0) {
+                saveFrame();
                 stat = TAKE_PHOTO;
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
-                saveFrame();
             }
             break;
         case CHATTERING:
@@ -147,10 +147,10 @@ void ofApp::draw(){
             }
             
             if (countdownSec <= .0) {
+                saveFrame();
                 stat = TAKE_PHOTO;
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
-                saveFrame();
             }
             break;
         case TAKE_PHOTO:
@@ -197,25 +197,20 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    if (key == 's') {
-            saveFrame();  // 's' で画像保存
-    }
 }
 
 // リファクタリングした saveFrame 関数
 void ofApp::saveFrame() {
-    if (grabber.isFrameNew()) {
-        // ピクセルデータを取得
-        ofPixels pixels = grabber.getPixels();
-        
-        // タイムスタンプ付きのファイル名を作成
-        string fileName = "capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
-        
-        // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
-        imageSaver.saveImageWithRotation(pixels, fileName, 90);  // 90度時計回りに回転
-        
-        ofLogNotice() << "Queued image for rotation and saving: " << fileName;
-    }
+    // ピクセルデータを取得
+    ofPixels pixels = grabber.getPixels();
+    
+    // タイムスタンプ付きのファイル名を作成
+    string fileName = "capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
+    
+    // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
+    imageSaver.saveImageWithRotation(pixels, fileName, 90);  // 90度時計回りに回転
+    
+    ofLogNotice() << "Queued image for rotation and saving: " << fileName;
 }
 
 //--------------------------------------------------------------
