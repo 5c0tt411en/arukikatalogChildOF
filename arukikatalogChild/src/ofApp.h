@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
     
         ofFbo fbo;  // 縮小用のFBO
         ofxSyphonServer syphonServer; // Syphon サーバー
+        ofxOscReceiver oscReceiver;  // OSCレシーバー
         
         int camWidth = 3840;  // カメラの解像度（幅）
         int camHeight = 2160; // カメラの解像度（高さ）
@@ -37,17 +38,22 @@ class ofApp : public ofBaseApp{
         int scaledHeight = 360;
         bool isVertical = false;
     
-        float tick, timeStamp;
+        float tick,
+              timeStamp,
+              resetTick,
+              resetTimeStamp,
+              scaleValue,
+              countdownSec;
     
-        ofxOscReceiver oscReceiver;  // OSCレシーバー
+        const float countdownConst = 5.0,
+                    resetConst = 1.0;
+    
         bool triggerState;           // /trigger の値
-        float scaleValue;            // /scale の値
-        float countdownSec;
-        const float countdownConst = 5.0;
     
         enum State {
             WAIT,
             COUNTDOWN,
+            CHATTERING,
             TAKE_PHOTO,
             SYNC,
         };

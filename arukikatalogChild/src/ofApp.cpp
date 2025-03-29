@@ -85,6 +85,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     tick  = ofGetElapsedTimef() - timeStamp;
+    resetTick = ofGetElapsedTimef() - resetTimeStamp;
     
     ofBackground(255);
 	ofSetColor(255);
@@ -110,6 +111,32 @@ void ofApp::draw(){
             countdownSec = countdownConst - tick;
             ofSetColor(0);
             font.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
+            
+            if (!triggerState) {
+                stat = CHATTERING;
+                resetTimeStamp = ofGetElapsedTimef();
+            }
+            
+            if (countdownSec <= .0) {
+                stat = TAKE_PHOTO;
+                timeStamp = ofGetElapsedTimef();
+                countdownSec = countdownConst;
+            }
+            break;
+        case CHATTERING:
+            countdownSec = countdownConst - tick;
+            ofSetColor(0, 255 * (1 - resetTick));
+            font.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
+            
+            if (triggerState) {
+                stat = COUNTDOWN;
+                resetTimeStamp = ofGetElapsedTimef();
+            }
+            
+            if (resetTick >= resetConst) {
+                stat = WAIT;
+                timeStamp = ofGetElapsedTimef();
+            }
             
             if (countdownSec <= .0) {
                 stat = TAKE_PHOTO;
