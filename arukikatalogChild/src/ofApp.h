@@ -27,6 +27,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         void exit();  // アプリ終了時の処理を追加
         void saveFrame();
+        void drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y);
 		
 		ofVideoGrabber grabber;
     
@@ -63,5 +64,6 @@ class ofApp : public ofBaseApp{
             SYNC,
         };
         State stat = WAIT;
-        ofTrueTypeFont font;
+        ofTrueTypeFont font,
+                       countdownFont;
 };

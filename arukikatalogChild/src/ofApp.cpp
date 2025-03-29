@@ -34,11 +34,7 @@ void ofApp::setup(){
     triggerState = false;  // 初期値
     scaleValue = 1.0f;     // 初期値
     
-//    font.load("ヒラギノ角ゴシック W3.ttc", 50, true, true, true); // フォントのデータを指定する
-//    font.setLineHeight(24);       // 行間を指定する
-//    font.setLetterSpacing(1.0);   // 文字間を指定する
-    
-    ofTrueTypeFontSettings settings("fonts/ヒラギノ角ゴシック W3.ttc", 50);
+    ofTrueTypeFontSettings settings("fonts/ヒラギノ角ゴシック W3.ttc", 28);
 //    settings.antialiased = true;
     settings.contours = true;
     settings.addRanges(ofAlphabet::Japanese);//日本語
@@ -49,6 +45,10 @@ void ofApp::setup(){
     settings.addRange(ofUnicode::Hiragana);//ひらがな
     settings.addRange(ofUnicode::Katakana);//カタカナ
     font.load(settings);
+    
+    ofTrueTypeFontSettings settings_cd("fonts/ヒラギノ角ゴシック W3.ttc", 100);
+    countdownFont.load(settings_cd);
+    
     
     // UTF-8エンコーディングを使用
     ofEnableAlphaBlending();
@@ -92,6 +92,10 @@ void ofApp::draw(){
     tick  = ofGetElapsedTimef() - timeStamp;
     resetTick = ofGetElapsedTimef() - resetTimeStamp;
     
+    // 画面の中心座標を取得
+    float centerX = ofGetWidth() / 2;
+    float centerY = ofGetHeight() / 2;
+    
     ofBackground(255);
 	ofSetColor(255);
     
@@ -100,7 +104,7 @@ void ofApp::draw(){
     ofTranslate(ofGetWidth(), 0);  // 90度回転後の新しい原点
     ofRotateDeg(90);  // 時計回りに90度回転
     // 回転した映像を描画
-    grabber.draw(0, 0, ofGetWidth() * 16 / 9, ofGetWidth());
+    grabber.draw(ofGetHeight() / 2 - ofGetWidth() / 2, 0, ofGetWidth() * 16 / 9, ofGetWidth());
     ofPopMatrix();
     
     
@@ -108,7 +112,8 @@ void ofApp::draw(){
     switch (stat) {
         case WAIT:
             ofSetColor(0, 128 - 128 * cos(tick * 3));
-            font.drawString("ポーズをとってください。", 100, 200);
+            drawTextCentered(font, "ポーズをとってください。", centerX, centerY);
+//            font.drawString("ポーズをとってください。", 100, 200);
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
@@ -116,8 +121,6 @@ void ofApp::draw(){
             break;
         case COUNTDOWN:
             countdownSec = countdownConst - tick;
-            ofSetColor(0);
-            font.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
             
             if (!triggerState) {
                 stat = CHATTERING;
@@ -130,11 +133,13 @@ void ofApp::draw(){
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
             }
+            else {
+                ofSetColor(0);
+                countdownFont.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
+            }
             break;
         case CHATTERING:
             countdownSec = countdownConst - tick;
-            ofSetColor(0, 255 * (1 - resetTick));
-            font.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
             
             if (triggerState) {
                 stat = COUNTDOWN;
@@ -151,6 +156,10 @@ void ofApp::draw(){
                 stat = TAKE_PHOTO;
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
+            }
+            else {
+                ofSetColor(0, 255 * (1 - resetTick));
+                countdownFont.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
             }
             break;
         case TAKE_PHOTO:
@@ -169,7 +178,8 @@ void ofApp::draw(){
             ofSetColor(0, toSyncAlpha);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             ofSetColor(255, 128 - 128 * cos(tick * 3));
-            font.drawString("別の写真を待っています。", 100, 200);
+            drawTextCentered(font, "別の写真を待っています。", centerX, centerY);
+//            font.drawString("別の写真を待っています。", 100, 200);
             if (tick >= 10.) {
                 stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
@@ -188,6 +198,18 @@ void ofApp::draw(){
     info += "tick : " + ofToString(tick) + '\n';
     info += "state : " + ofToString(stat);
     ofDrawBitmapStringHighlight(info, 20, 60);
+}
+
+void ofApp::drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y) {
+    // テキストの寸法を取得
+    ofRectangle bounds = font.getStringBoundingBox(text, 0, 0);
+    
+    // 中央揃えのための座標を計算
+    float xCentered = x - bounds.width / 2;
+    float yCentered = y + bounds.height / 2; // Y座標はフォントのベースラインが基準なので高さの半分を加算
+    
+    // 計算した位置にテキストを描画
+    font.drawString(text, xCentered, yCentered);
 }
 
 //--------------------------------------------------------------
