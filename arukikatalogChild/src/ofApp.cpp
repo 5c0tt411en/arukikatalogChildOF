@@ -188,6 +188,7 @@ void ofApp::draw(){
     }
     
     // Syphon に送信
+    ofSetColor(255);
     syphonServer.publishTexture(&fbo.getTexture());
     
     string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
