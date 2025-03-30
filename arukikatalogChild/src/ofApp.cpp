@@ -113,7 +113,6 @@ void ofApp::draw(){
         case WAIT:
             ofSetColor(0, 128 - 128 * cos(tick * 3));
             drawTextCentered(font, "ポーズをとってください。", centerX, centerY);
-//            font.drawString("ポーズをとってください。", 100, 200);
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
@@ -179,7 +178,6 @@ void ofApp::draw(){
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             ofSetColor(255, 128 - 128 * cos(tick * 3));
             drawTextCentered(font, "別の写真を待っています。", centerX, centerY);
-//            font.drawString("別の写真を待っています。", 100, 200);
             if (tick >= 10.) {
                 stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
