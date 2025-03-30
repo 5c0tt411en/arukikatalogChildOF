@@ -104,7 +104,7 @@ void ofApp::draw(){
     ofTranslate(ofGetWidth(), 0);  // 90度回転後の新しい原点
     ofRotateDeg(90);  // 時計回りに90度回転
     // 回転した映像を描画
-    grabber.draw(ofGetHeight() / 2 - ofGetWidth() / 2, 0, ofGetWidth() * 16 / 9, ofGetWidth());
+    grabber.draw(ofGetHeight() / 2 - (ofGetWidth() * 16 / 9) / 2, 0, ofGetWidth() * 16 / 9, ofGetWidth());
     ofPopMatrix();
     
     
