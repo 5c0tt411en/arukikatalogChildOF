@@ -40,6 +40,11 @@ class ofApp : public ofBaseApp{
                   camHeight = 2160, // カメラの解像度（高さ）
                   fboWidth = 640,  // 縮小解像度
                   fboHeight = 360;
+    
+        const float countdownConst = 5.0,
+                    resetConst = 1.0,
+                    scaleToShow = 3.0;
+    
         bool isVertical = false;
     
         float tick,
@@ -50,10 +55,6 @@ class ofApp : public ofBaseApp{
               countdownSec,
               shutterAlpha,
               toSyncAlpha;
-    
-        const float countdownConst = 5.0,
-                    resetConst = 1.0,
-                    scaleToShow = 3.0;
     
         bool triggerState,  // /trigger の値
              showGui;
