@@ -52,7 +52,8 @@ class ofApp : public ofBaseApp{
               toSyncAlpha;
     
         const float countdownConst = 5.0,
-                    resetConst = 1.0;
+                    resetConst = 1.0,
+                    scaleToShow = 3.0;
     
         bool triggerState;           // /trigger の値
     
