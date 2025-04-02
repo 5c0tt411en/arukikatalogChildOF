@@ -36,10 +36,10 @@ class ofApp : public ofBaseApp{
         ofxOscReceiver oscReceiver;  // OSCレシーバー
         ImageSaverThread imageSaver; // 画像保存スレッド
         
-        int camWidth = 3840;  // カメラの解像度（幅）
-        int camHeight = 2160; // カメラの解像度（高さ）
-        int fboWidth = 640;  // 縮小解像度
-        int fboHeight = 360;
+        const int camWidth = 3840,  // カメラの解像度（幅）
+                  camHeight = 2160, // カメラの解像度（高さ）
+                  fboWidth = 640,  // 縮小解像度
+                  fboHeight = 360;
         bool isVertical = false;
     
         float tick,
