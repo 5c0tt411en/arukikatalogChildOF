@@ -38,8 +38,8 @@ class ofApp : public ofBaseApp{
         
         int camWidth = 3840;  // カメラの解像度（幅）
         int camHeight = 2160; // カメラの解像度（高さ）
-        int scaledWidth = 640;  // 縮小解像度
-        int scaledHeight = 360;
+        int fboWidth = 640;  // 縮小解像度
+        int fboHeight = 360;
         bool isVertical = false;
     
         float tick,

@@ -28,7 +28,7 @@ void ofApp::setup(){
     syphonServer.setName("oF-Syphon");
 
     // 縮小描画用のFBOを作成
-    fbo.allocate(scaledWidth, scaledHeight, GL_RGB);
+    fbo.allocate(fboWidth, fboHeight, GL_RGB);
     
     oscReceiver.setup(OSC_PORT);  // 受信ポート設定
     triggerState = false;  // 初期値
@@ -67,7 +67,7 @@ void ofApp::update(){
         fbo.begin();
         ofClear(0, 0, 0, 255); // FBOのクリア
         // 取得した映像を縮小描画
-        grabber.draw(0, 0, scaledWidth, scaledHeight);
+        grabber.draw(0, 0, fboWidth, fboHeight);
         fbo.end();
 	}
     
