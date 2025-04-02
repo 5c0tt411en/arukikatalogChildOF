@@ -193,12 +193,14 @@ void ofApp::draw(){
     ofSetColor(255);
     syphonServer.publishTexture(&fbo.getTexture());
     
-    string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
-    info += "OSC /trigger : " + ofToString(triggerState) + '\n';
-    info += "OSC /scale : " + ofToString(scaleValue) + '\n';
-    info += "tick : " + ofToString(tick) + '\n';
-    info += "state : " + ofToString(stat);
-    ofDrawBitmapStringHighlight(info, 20, 60);
+    if (showGui) {
+        string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
+        info += "OSC /trigger : " + ofToString(triggerState) + '\n';
+        info += "OSC /scale : " + ofToString(scaleValue) + '\n';
+        info += "tick : " + ofToString(tick) + '\n';
+        info += "state : " + ofToString(stat);
+        ofDrawBitmapStringHighlight(info, 20, 60);
+    }
 }
 
 void ofApp::drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y) {
@@ -220,6 +222,9 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+    if (key == 'g') {
+        showGui = !showGui;
+    }
 }
 
 // リファクタリングした saveFrame 関数

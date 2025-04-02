@@ -55,7 +55,8 @@ class ofApp : public ofBaseApp{
                     resetConst = 1.0,
                     scaleToShow = 3.0;
     
-        bool triggerState;           // /trigger の値
+        bool triggerState,  // /trigger の値
+             showGui;
     
         enum State {
             WAIT,
