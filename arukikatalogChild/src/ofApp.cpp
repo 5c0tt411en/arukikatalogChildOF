@@ -106,6 +106,8 @@ void ofApp::draw(){
     // 回転した映像を描画
     int grabberWidth = scaleToShow * ofGetWidth() * 16 / 9;
     int grabberHeight = scaleToShow * ofGetWidth();
+//    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
+    grabber.draw((ofGetHeight() - grabberWidth) / 2 - offsetY, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
     grabber.draw((ofGetHeight() - grabberWidth) / 2, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
     ofPopMatrix();
     
