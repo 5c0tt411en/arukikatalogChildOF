@@ -232,7 +232,7 @@ void ofApp::saveFrame() {
     string fileName = "outputs/capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
     
     // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
-    imageSaver.saveImageWithRotation(pixels, fileName, 90);  // 90度時計回りに回転
+    imageSaver.saveImageWithRotation(pixels, fileName, 0);  // 90度時計回りに回転
     
     ofLogNotice() << "Queued image for rotation and saving: " << fileName;
 }
