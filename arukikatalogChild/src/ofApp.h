@@ -44,7 +44,7 @@ class ofApp : public ofBaseApp{
     
         const float countdownConst = 5.0,
                     resetConst = 1.0,
-                    scaleToShow = 2.0,
+                    scaleToShow = 1.0,
                     mp2mm = 1000.0,
                     lenPerDot = 1.0;
     

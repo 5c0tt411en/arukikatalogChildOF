@@ -99,18 +99,12 @@ void ofApp::draw(){
     ofBackground(255);
 	ofSetColor(255);
     
-    ofPushMatrix();
-    // 画面の中心に移動し、90度回転
-    ofTranslate(ofGetWidth(), 0);  // 90度回転後の新しい原点
-    ofRotateDeg(90);  // 時計回りに90度回転
-    // 回転した映像を描画
-    int grabberWidth = scaleToShow * ofGetWidth() * 16 / 9;
-    int grabberHeight = scaleToShow * ofGetWidth();
+    int grabberWidth = scaleToShow * camWidth;
+    int grabberHeight = scaleToShow * camHeight;
 //    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
-    grabber.draw((ofGetHeight() - grabberWidth) / 2 - offsetY, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
-    grabber.draw((ofGetHeight() - grabberWidth) / 2, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
-    ofPopMatrix();
-    
+//    grabber.draw((ofGetHeight() - grabberWidth) / 2 - offsetY, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
+    grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
+//    grabber.draw(0, 0, ofGetWidth(), ofGetHeight());
     
     
     switch (stat) {
