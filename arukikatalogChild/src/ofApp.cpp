@@ -102,10 +102,7 @@ void ofApp::draw(){
     int grabberWidth = scaleToShow * camWidth;
     int grabberHeight = scaleToShow * camHeight;
 //    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
-//    grabber.draw((ofGetHeight() - grabberWidth) / 2 - offsetY, (ofGetWidth() - grabberHeight) / 2, grabberWidth, grabberHeight);
     grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
-//    grabber.draw(0, 0, ofGetWidth(), ofGetHeight());
-    
     
     switch (stat) {
         case WAIT:
