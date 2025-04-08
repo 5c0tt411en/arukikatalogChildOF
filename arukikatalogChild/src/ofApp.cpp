@@ -55,6 +55,8 @@ void ofApp::setup(){
     
     // 画像保存スレッドを開始
     imageSaver.start();
+    
+    waitImg.load("images/waitImg.jpg");
 }
 
 //--------------------------------------------------------------
@@ -102,12 +104,11 @@ void ofApp::draw(){
     int grabberWidth = scaleToShow * camWidth;
     int grabberHeight = scaleToShow * camHeight;
 //    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
-    grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
     
     switch (stat) {
         case WAIT:
-            ofSetColor(0, 128 - 128 * cos(tick * 3));
-            drawTextCentered(font, "ポーズをとってください。", centerX, centerY);
+            ofSetColor(255, 255, 255, 128 - 128 * cos(tick * 3));
+            waitImg.draw(0, 0);
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
@@ -120,7 +121,7 @@ void ofApp::draw(){
                 stat = CHATTERING;
                 resetTimeStamp = ofGetElapsedTimef();
             }
-            
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
             if (countdownSec <= .0) {
                 saveFrame();
                 stat = TAKE_PHOTO;
@@ -134,7 +135,7 @@ void ofApp::draw(){
             break;
         case CHATTERING:
             countdownSec = countdownConst - tick;
-            
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
             if (triggerState) {
                 stat = COUNTDOWN;
                 resetTimeStamp = ofGetElapsedTimef();

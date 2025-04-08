@@ -71,4 +71,6 @@ class ofApp : public ofBaseApp{
         State stat = WAIT;
         ofTrueTypeFont font,
                        countdownFont;
+    
+        ofImage waitImg;  // 画像を保持する変数
 };
