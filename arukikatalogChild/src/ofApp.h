@@ -28,6 +28,7 @@ class ofApp : public ofBaseApp{
         void exit();  // アプリ終了時の処理を追加
         void saveFrame();
         void drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y);
+        float easeOutCubic(float t, float b, float c, float d);    
 		
 		ofVideoGrabber grabber;
     

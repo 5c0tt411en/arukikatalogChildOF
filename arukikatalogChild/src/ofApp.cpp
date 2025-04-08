@@ -105,7 +105,7 @@ void ofApp::draw(){
     
     int grabberWidth = scaleToShow * camWidth;
     int grabberHeight = scaleToShow * camHeight;
-//    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
+    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
     
     switch (stat) {
         case WAIT:
@@ -117,7 +117,8 @@ void ofApp::draw(){
             }
             break;
         case HEIGHT_ADJUST:
-            
+            offsetY = easeOutCubic(tick, 0, 1, 3.0) * 1000;
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetY, grabberWidth, grabberHeight);
             if (tick >= 3.0) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
@@ -250,6 +251,12 @@ void ofApp::saveFrame() {
      // スレッドを正しく終了
      imageSaver.stop();
  }
+
+float ofApp::easeOutCubic(float t, float b, float c, float d) {
+    t /= d;
+    t--;
+    return (c*(t*t*t + 1) + b);
+}
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
