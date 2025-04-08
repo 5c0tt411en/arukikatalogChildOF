@@ -80,11 +80,9 @@ void ofApp::update(){
         if (msg.getAddress() == "/trigger") {
             int val = msg.getArgAsInt(0);  // 整数として受け取る
             triggerState = (val == 1);
-//            ofLogNotice() << "Received /trigger: " << val;
         }
         else if (msg.getAddress() == "/scale") {
             scaleValue = msg.getArgAsFloat(0);  // 小数値として受け取る
-//            ofLogNotice() << "Received /scale: " << scaleValue;
         }
     }
 }
