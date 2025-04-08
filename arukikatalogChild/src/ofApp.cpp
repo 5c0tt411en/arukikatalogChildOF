@@ -84,6 +84,10 @@ void ofApp::update(){
         else if (msg.getAddress() == "/scale") {
             scaleValue = msg.getArgAsFloat(0);  // 小数値として受け取る
         }
+        else if (msg.getAddress() == "/is_detected") {
+            int val = msg.getArgAsInt(0);  // 整数として受け取る
+            isDetected = (val == 1);
+        }
     }
 }
 
@@ -187,6 +191,7 @@ void ofApp::draw(){
     
     if (showGui) {
         string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
+        info += "OSC /is_detected : " + ofToString(isDetected) + '\n';
         info += "OSC /trigger : " + ofToString(triggerState) + '\n';
         info += "OSC /scale : " + ofToString(scaleValue) + '\n';
         info += "tick : " + ofToString(tick) + '\n';

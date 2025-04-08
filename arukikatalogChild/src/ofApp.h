@@ -59,7 +59,8 @@ class ofApp : public ofBaseApp{
               toSyncAlpha;
     
         bool triggerState,  // /trigger の値
-             showGui;
+             showGui,
+             isDetected;
     
         enum State {
             WAIT,
