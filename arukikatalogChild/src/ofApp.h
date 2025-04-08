@@ -43,7 +43,7 @@ class ofApp : public ofBaseApp{
                   fboHeight = 360,
                   baseHeight = 1000;
     
-        const float countdownConst = 5.0,
+        const float countdownConst = 1.0,
                     resetConst = 1.0,
                     scaleToShow = 1.0,
                     mp2mm = 1000.0,
