@@ -138,10 +138,6 @@ void ofApp::draw(){
                 timeStamp = ofGetElapsedTimef();
                 countdownSec = countdownConst;
             }
-            else {
-                ofSetColor(0);
-                countdownFont.drawString(ofToString(std::ceil(countdownSec)), ofGetWidth() - 200, 200);
-            }
             break;
         case CHATTERING:
             countdownSec = countdownConst - tick;
