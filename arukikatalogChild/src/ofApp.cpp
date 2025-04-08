@@ -110,7 +110,7 @@ void ofApp::draw(){
     switch (stat) {
         case WAIT:
             ofSetColor(255, 255, 255, 128 - 128 * cos(tick * 3));
-            waitImg.draw(0, 0);
+            waitImg.draw(0, 0, ofGetWidth(), ofGetHeight());
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
