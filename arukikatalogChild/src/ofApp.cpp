@@ -111,7 +111,14 @@ void ofApp::draw(){
         case WAIT:
             ofSetColor(255, 255, 255, 128 - 128 * cos(tick * 3));
             waitImg.draw(0, 0, ofGetWidth(), ofGetHeight());
-            if (triggerState) {
+            if (isDetected) {
+                stat = HEIGHT_ADJUST;
+                timeStamp = ofGetElapsedTimef();
+            }
+            break;
+        case HEIGHT_ADJUST:
+            
+            if (tick >= 3.0) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
             }

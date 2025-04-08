@@ -64,6 +64,7 @@ class ofApp : public ofBaseApp{
     
         enum State {
             WAIT,
+            HEIGHT_ADJUST,
             COUNTDOWN,
             CHATTERING,
             TAKE_PHOTO,
