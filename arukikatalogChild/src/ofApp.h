@@ -79,4 +79,6 @@ class ofApp : public ofBaseApp{
                 poseImg,
                 endImg,
                 okImg;  // 画像を保持する変数
+    
+        ofSoundPlayer shutterSound;  // シャッター音を保持する変数
 };
