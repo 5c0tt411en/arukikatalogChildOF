@@ -37,10 +37,10 @@ void ofApp::setup(){
     // 画像保存スレッドを開始
     imageSaver.start();
     
-    waitImg.load("images/waitImg.jpg");
-    poseImg.load("images/poseImg.jpg");
-    okImg.load("images/okImg");
-    endImg.load("images/endImg.jpg");
+    waitImg.load("images/waitImg.png");
+    poseImg.load("images/poseImg.png");
+    okImg.load("images/okImg.png");
+    endImg.load("images/endImg.png");
     
     ofHideCursor();
 }
@@ -159,10 +159,9 @@ void ofApp::draw(){
             break;
         case TAKE_PHOTO:
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetYEase, grabberWidth, grabberHeight);
-            
-            toSyncAlpha = ofClamp(128 * (tick - 3.), 0, 255);
-            ofSetColor(255, toSyncAlpha);
-            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+//            toSyncAlpha = ofClamp(128 * (tick - 3.), 0, 255);
+//            ofSetColor(255, toSyncAlpha);
+//            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             if (tick >= 5.) {
                 stat = END;
                 timeStamp = ofGetElapsedTimef();
