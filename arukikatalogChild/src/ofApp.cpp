@@ -34,30 +34,12 @@ void ofApp::setup(){
     triggerState = false;  // 初期値
     scaleValue = 1.0f;     // 初期値
     
-    ofTrueTypeFontSettings settings("fonts/ヒラギノ角ゴシック W3.ttc", 28);
-//    settings.antialiased = true;
-    settings.contours = true;
-    settings.addRanges(ofAlphabet::Japanese);//日本語
-    settings.addRange(ofUnicode::Space);//スペース
-    settings.addRange(ofUnicode::Latin);//アルファベット等
-    settings.addRange(ofUnicode::Latin1Supplement);//記号、アクサン付き文字など
-    settings.addRange(ofUnicode::NumberForms);//数字？
-    settings.addRange(ofUnicode::Hiragana);//ひらがな
-    settings.addRange(ofUnicode::Katakana);//カタカナ
-    font.load(settings);
-    
-    ofTrueTypeFontSettings settings_cd("fonts/ヒラギノ角ゴシック W3.ttc", 100);
-    countdownFont.load(settings_cd);
-    
-    
-    // UTF-8エンコーディングを使用
-    ofEnableAlphaBlending();
-    
     // 画像保存スレッドを開始
     imageSaver.start();
     
     waitImg.load("images/waitImg.jpg");
     endImg.load("images/endImg.jpg");
+    okImg.load("images/okImg");
     
     ofHideCursor();
 }
@@ -175,11 +157,8 @@ void ofApp::draw(){
             }
             break;
         case TAKE_PHOTO:
-            
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetYEase, grabberWidth, grabberHeight);
-            shutterAlpha = ofClamp(255 * (1 - tick), 0, 255);
-            ofSetColor(255, shutterAlpha);
-            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+            
             toSyncAlpha = ofClamp(128 * (tick - 3.), 0, 255);
             ofSetColor(255, toSyncAlpha);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
@@ -213,18 +192,6 @@ void ofApp::draw(){
         info += "state : " + ofToString(stat);
         ofDrawBitmapStringHighlight(info, 20, 60);
     }
-}
-
-void ofApp::drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y) {
-    // テキストの寸法を取得
-    ofRectangle bounds = font.getStringBoundingBox(text, 0, 0);
-    
-    // 中央揃えのための座標を計算
-    float xCentered = x - bounds.width / 2;
-    float yCentered = y + bounds.height / 2; // Y座標はフォントのベースラインが基準なので高さの半分を加算
-    
-    // 計算した位置にテキストを描画
-    font.drawString(text, xCentered, yCentered);
 }
 
 //--------------------------------------------------------------

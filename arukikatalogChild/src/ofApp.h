@@ -27,7 +27,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         void exit();  // アプリ終了時の処理を追加
         void saveFrame();
-        void drawTextCentered(ofTrueTypeFont &font, const string &text, float x, float y);
         float easeOutCubic(float t, float b, float c, float d);    
 		
 		ofVideoGrabber grabber;
@@ -75,9 +74,9 @@ class ofApp : public ofBaseApp{
             END,
         };
         State stat = WAIT;
-        ofTrueTypeFont font,
-                       countdownFont;
     
         ofImage waitImg,
-                endImg;  // 画像を保持する変数
+                poseImg,
+                endImg,
+                okImg;  // 画像を保持する変数
 };
