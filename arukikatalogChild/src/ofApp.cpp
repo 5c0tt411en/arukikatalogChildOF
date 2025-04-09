@@ -57,6 +57,7 @@ void ofApp::setup(){
     imageSaver.start();
     
     waitImg.load("images/waitImg.jpg");
+    endImg.load("images/endImg.jpg");
 }
 
 //--------------------------------------------------------------
@@ -177,20 +178,18 @@ void ofApp::draw(){
             shutterAlpha = ofClamp(255 * (1 - tick), 0, 255);
             ofSetColor(255, shutterAlpha);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
-            toSyncAlpha = ofClamp(75 * (tick - 3.), 0, 150);
-            ofSetColor(0, toSyncAlpha);
+            toSyncAlpha = ofClamp(128 * (tick - 3.), 0, 255);
+            ofSetColor(255, toSyncAlpha);
             ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
             if (tick >= 5.) {
-                stat = SYNC;
+                stat = END;
                 timeStamp = ofGetElapsedTimef();
             }
             break;
-        case SYNC:
-            ofSetColor(0, toSyncAlpha);
-            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+        case END:
             ofSetColor(255, 128 - 128 * cos(tick * 3));
-            drawTextCentered(font, "別の写真を待っています。", centerX, centerY);
-            if (tick >= 10.) {
+            endImg.draw(0, 0, ofGetWidth(), ofGetHeight());
+            if (!isDetected && tick >= timeoutSec) {
                 stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
             }

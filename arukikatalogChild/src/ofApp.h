@@ -72,11 +72,12 @@ class ofApp : public ofBaseApp{
             COUNTDOWN,
             CHATTERING,
             TAKE_PHOTO,
-            SYNC,
+            END,
         };
         State stat = WAIT;
         ofTrueTypeFont font,
                        countdownFont;
     
-        ofImage waitImg;  // 画像を保持する変数
+        ofImage waitImg,
+                endImg;  // 画像を保持する変数
 };
