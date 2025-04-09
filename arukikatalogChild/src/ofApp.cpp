@@ -51,7 +51,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if (stat == WAIT || stat == HEIGHT_ADJUST || stat == POSING || stat == COUNTDOWN || stat == CHATTERING || stat == END) {
+    if (stat != TAKE_PHOTO) {
         grabber.update();
     }
     
@@ -95,15 +95,26 @@ void ofApp::draw(){
     
     int grabberWidth = scaleToShow * camWidth * 1080 / 360;
     int grabberHeight = scaleToShow * camHeight;
-//    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
-    offsetY = 200;
     
     switch (stat) {
         case WAIT:
             ofSetColor(255);
             waitImg.draw(0, 0, ofGetWidth(), ofGetHeight());
             if (isDetected) {
+                stat = MEASURE;
+                timeStamp = ofGetElapsedTimef();
+            }
+            break;
+        case MEASURE:
+            offsetY = 200;
+//            offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
+            if (isDetected && tick >= 1.0) {
                 stat = HEIGHT_ADJUST;
+                timeStamp = ofGetElapsedTimef();
+            }
+            if (!isDetected && tick >= timeoutSec) {
+                stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
             }
             break;
@@ -114,9 +125,13 @@ void ofApp::draw(){
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
             }
+            if (!isDetected && tick >= timeoutSec) {
+                stat = WAIT;
+                timeStamp = ofGetElapsedTimef();
+            }
             break;
         case POSING:
-            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetYEase, grabberWidth, grabberHeight);
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetY, grabberWidth, grabberHeight);
             if (triggerState) {
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
@@ -164,7 +179,8 @@ void ofApp::draw(){
             }
             break;
         case TAKE_PHOTO:
-            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetYEase, grabberWidth, grabberHeight);
+            grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetY, grabberWidth, grabberHeight);
+            okImg.draw(0, (ofGetHeight() - grabberHeight) / 2 + offsetY, ofGetWidth(), okImg.getHeight());
 //            toSyncAlpha = ofClamp(128 * (tick - 3.), 0, 255);
 //            ofSetColor(255, toSyncAlpha);
 //            ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
