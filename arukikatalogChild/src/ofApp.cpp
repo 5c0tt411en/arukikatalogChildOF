@@ -58,11 +58,13 @@ void ofApp::setup(){
     
     waitImg.load("images/waitImg.jpg");
     endImg.load("images/endImg.jpg");
+    
+    ofHideCursor();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    if (stat == WAIT || stat == HEIGHT_ADJUST || stat == POSING || stat == COUNTDOWN || stat == CHATTERING) {
+    if (stat == WAIT || stat == HEIGHT_ADJUST || stat == POSING || stat == COUNTDOWN || stat == CHATTERING || stat == END) {
         grabber.update();
     }
     
@@ -104,7 +106,7 @@ void ofApp::draw(){
     ofBackground(255);
 	ofSetColor(255);
     
-    int grabberWidth = scaleToShow * camWidth;
+    int grabberWidth = scaleToShow * camWidth * 3840 / 1080;
     int grabberHeight = scaleToShow * camHeight;
 //    offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
     offsetY = 200;
