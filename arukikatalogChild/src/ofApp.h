@@ -44,12 +44,14 @@ class ofApp : public ofBaseApp{
                   baseHeight = 1000;
     
         const float countdownConst = 1.0,
-                    resetConst = 1.0,
-                    scaleToShow = 1.0,
+                    resetConst = 0.4,
+                    scaleToShow = 0.25,
                     mp2mm = 1000.0,
-                    lenPerDot = 1.0;
+                    lenPerDot = 1.0,
+                    timeoutSec = 10.0;
     
-        int offsetY;
+        int offsetY,
+            offsetYEase;
         float tick,
               timeStamp,
               resetTick,
@@ -66,6 +68,7 @@ class ofApp : public ofBaseApp{
         enum State {
             WAIT,
             HEIGHT_ADJUST,
+            POSING,
             COUNTDOWN,
             CHATTERING,
             TAKE_PHOTO,
