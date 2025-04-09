@@ -38,8 +38,9 @@ void ofApp::setup(){
     imageSaver.start();
     
     waitImg.load("images/waitImg.jpg");
-    endImg.load("images/endImg.jpg");
+    poseImg.load("images/poseImg.jpg");
     okImg.load("images/okImg");
+    endImg.load("images/endImg.jpg");
     
     ofHideCursor();
 }
