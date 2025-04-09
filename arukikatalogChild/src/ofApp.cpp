@@ -96,7 +96,7 @@ void ofApp::draw(){
     
     switch (stat) {
         case WAIT:
-            ofSetColor(255, 255, 255, 128 - 128 * cos(tick * 3));
+            ofSetColor(255);
             waitImg.draw(0, 0, ofGetWidth(), ofGetHeight());
             if (isDetected) {
                 stat = HEIGHT_ADJUST;
@@ -169,7 +169,7 @@ void ofApp::draw(){
             }
             break;
         case END:
-            ofSetColor(255, 128 - 128 * cos(tick * 3));
+            ofSetColor(255);
             endImg.draw(0, 0, ofGetWidth(), ofGetHeight());
             if (!isDetected && tick >= timeoutSec) {
                 stat = WAIT;
