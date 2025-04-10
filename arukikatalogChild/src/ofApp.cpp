@@ -73,6 +73,7 @@ void ofApp::update(){
         }
         else if (msg.getAddress() == "/scale") {
             scaleValue = msg.getArgAsFloat(0);  // 小数値として受け取る
+            height_mm = mp2mm * scaleValue;
         }
         else if (msg.getAddress() == "/is_detected") {
             int val = msg.getArgAsInt(0);  // 整数として受け取る
@@ -106,8 +107,7 @@ void ofApp::draw(){
             }
             break;
         case MEASURE:
-            offsetY = 200;
-//            offsetY = ofGetHeight() - (mp2mm * scaleValue / lenPerDot - baseHeight / lenPerDot);
+            offsetY = ofClamp(mm2px * (displayHeight - (height_mm - baseHeight)) - ofGetHeight() / 2, (-ofGetHeight() + grabberHeight) / 2, (ofGetHeight() - grabberHeight) / 2);
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
             if (isDetected && tick >= 1.0) {
                 stat = HEIGHT_ADJUST;
@@ -210,6 +210,8 @@ void ofApp::draw(){
         info += "OSC /is_detected : " + ofToString(isDetected) + '\n';
         info += "OSC /trigger : " + ofToString(triggerState) + '\n';
         info += "OSC /scale : " + ofToString(scaleValue) + '\n';
+        info += "height(mm) : " + ofToString(height_mm) + '\n';
+        info += "offset(px) : " + ofToString(offsetY) + '\n';
         info += "tick : " + ofToString(tick) + '\n';
         info += "state : " + ofToString(stat);
         ofDrawBitmapStringHighlight(info, 20, 60);
