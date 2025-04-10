@@ -79,6 +79,10 @@ void ofApp::update(){
             int val = msg.getArgAsInt(0);  // 整数として受け取る
             isDetected = (val == 1);
         }
+        else if (msg.getAddress() == "/index") {
+            int val = msg.getArgAsInt(0);  // 整数として受け取る
+            poseIndex = val;
+        }
     }
 }
 
@@ -225,6 +229,7 @@ void ofApp::draw(){
     if (showGui) {
         string info = "FPS: " + ofToString(ofGetFrameRate()) + '\n';
         info += "OSC /is_detected : " + ofToString(isDetected) + '\n';
+        info += "OSC /index : " + ofToString(poseIndex) + '\n';
         info += "OSC /trigger : " + ofToString(triggerState) + '\n';
         info += "OSC /scale : " + ofToString(scaleValue) + '\n';
         info += "height(mm) : " + ofToString(height_mm) + '\n';
@@ -260,8 +265,8 @@ void ofApp::saveFrame() {
     
     ofLogNotice() << "Queued image for rotation and saving: " << fileName;
     
-    // タイムスタンプ付きのファイル名を作成
-    fileName = "../../../SFC-CNS Dropbox/Scott Allen/arukikatalog/capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
+    // ポーズ番号でファイル名を作成
+    fileName = "../../../SFC-CNS Dropbox/Scott Allen/arukikatalog/" + ofToString(poseIndex) + ".png";
     
     // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
     imageSaver.saveImageWithRotation(pixels, fileName, 0);  // 90度時計回りに回転

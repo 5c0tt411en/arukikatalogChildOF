@@ -53,7 +53,8 @@ class ofApp : public ofBaseApp{
     
         int offsetY,
             offsetYEase,
-            poseImgY;
+            poseImgY,
+            poseIndex;
         float tick,
               timeStamp,
               resetTick,
