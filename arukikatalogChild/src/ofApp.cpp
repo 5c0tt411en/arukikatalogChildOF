@@ -109,6 +109,14 @@ void ofApp::draw(){
         case MEASURE:
             offsetY = ofClamp(mm2px * (displayHeight - (height_mm - baseHeight)) - ofGetHeight() / 2, (-ofGetHeight() + grabberHeight) / 2, (ofGetHeight() - grabberHeight) / 2);
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2, grabberWidth, grabberHeight);
+            
+            if (offsetY > 0) {
+                poseImgY = (ofGetHeight() - grabberHeight) / 2 + offsetY - poseImg.getHeight();
+            }
+            else {
+                poseImgY = (ofGetHeight() + grabberHeight) / 2 + offsetY;
+            }
+            
             if (isDetected && tick >= 1.0) {
                 stat = HEIGHT_ADJUST;
                 timeStamp = ofGetElapsedTimef();
@@ -136,6 +144,9 @@ void ofApp::draw(){
                 stat = COUNTDOWN;
                 timeStamp = ofGetElapsedTimef();
             }
+            
+            poseImg.draw(0, poseImgY, ofGetWidth(), poseImg.getHeight());
+            
             if (!isDetected && tick >= timeoutSec) {
                 stat = WAIT;
                 timeStamp = ofGetElapsedTimef();
@@ -149,6 +160,9 @@ void ofApp::draw(){
                 resetTimeStamp = ofGetElapsedTimef();
             }
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetY, grabberWidth, grabberHeight);
+            
+            poseImg.draw(0, poseImgY, ofGetWidth(), poseImg.getHeight());
+            
             if (countdownSec <= .0) {
                 saveFrame();
                 shutterSound.play();
@@ -160,6 +174,9 @@ void ofApp::draw(){
         case CHATTERING:
             countdownSec = countdownConst - tick;
             grabber.draw((ofGetWidth() - grabberWidth) / 2, (ofGetHeight() - grabberHeight) / 2 + offsetY, grabberWidth, grabberHeight);
+            
+            poseImg.draw(0, poseImgY, ofGetWidth(), poseImg.getHeight());
+            
             if (triggerState) {
                 stat = COUNTDOWN;
                 resetTimeStamp = ofGetElapsedTimef();

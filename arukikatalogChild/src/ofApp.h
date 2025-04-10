@@ -46,13 +46,14 @@ class ofApp : public ofBaseApp{
         const float countdownConst = 1.0,
                     resetConst = 0.4,
                     scaleToShow = 0.25,
-                    mp2mm = 2610.068,
+                    mp2mm = 2100, //身長をスケールで割った
                     mm2px = 1.6, //1920 / 1200
                     lenPerDot = 1.0,
                     timeoutSec = 10.0;
     
         int offsetY,
-            offsetYEase;
+            offsetYEase,
+            poseImgY;
         float tick,
               timeStamp,
               resetTick,
