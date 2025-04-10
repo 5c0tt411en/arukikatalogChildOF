@@ -259,6 +259,14 @@ void ofApp::saveFrame() {
     imageSaver.saveImageWithRotation(pixels, fileName, 0);  // 90度時計回りに回転
     
     ofLogNotice() << "Queued image for rotation and saving: " << fileName;
+    
+    // タイムスタンプ付きのファイル名を作成
+    fileName = "../../../SFC-CNS Dropbox/Scott Allen/arukikatalog/capture_" + ofGetTimestampString("%Y%m%d_%H%M%S") + ".png";
+    
+    // ピクセルデータをスレッドに渡して、スレッド内で回転・保存
+    imageSaver.saveImageWithRotation(pixels, fileName, 0);  // 90度時計回りに回転
+    
+    ofLogNotice() << "Queued image for rotation and saving: " << fileName;
 }
 
 //--------------------------------------------------------------
